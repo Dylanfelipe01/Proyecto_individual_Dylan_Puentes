@@ -1,134 +1,325 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planificador de Tareas</title>
+    <title>Planificador de Tareas - Proyecto Gen</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pricedown&family=Teko:wght@600;700&family=Changa:wght@600;800&display=swap"
+        rel="stylesheet">
+
 </head>
-<body class="bg-light">
+
+<body>
 
     <div class="container py-4">
-        <header class="bg-primary text-white p-3 rounded mb-4 shadow-sm d-flex align-items-center gap-3">
-            <div class="bg-white text-primary rounded p-2 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
-                <i class="bi bi-check2-square fs-3"></i>
+        <header class="gta-header p-3 rounded mb-4 d-flex align-items-center gap-3">
+
+            <div>
+                <h1 class="gta-title mb-0">Planificador de Tareas</h1>
+                <small class="text-uppercase gta-subtitle">Los Santos Edition</small>
             </div>
-            <h1 class="h3 mb-0 fw-bold">Planificador de tareas</h1>
         </header>
+
         <div class="row g-4">
+            <!--FORMULARIO-->
             <div class="col-12 col-md-5 col-lg-4">
-                <div class="card shadow-sm border-0">
+                <div class="card gta-card">
                     <div class="card-body p-4">
-                        <h2 class="h5 card-title mb-3 border-bottom pb-2 fw-semibold">
-                            <i class="bi bi-plus-circle me-1"></i> Nueva tarea
+                        <h2
+                            class="gta-card-title mb-3 border-bottom border-secondary pb-2 d-flex align-items-center gap-2">
+                            <i class="bi bi-plus-square-fill text-warning"></i> Nueva misión
                         </h2>
-                        
+
                         <form id="taskForm">
                             <div class="mb-3">
-                                <label for="taskTitle" class="form-label fw-medium">Tarea</label>
-                                <input type="text" class="form-control" id="taskTitle" placeholder="Nueva tarea..." required>
+                                <label for="taskTitle" class="form-label gta-label fw-bold">Nombre de la Misión</label>
+                                <input type="text" class="form-control gta-input" id="taskTitle" placeholder="..."
+                                    required>
                             </div>
 
-                            <!-- Textarea Descripción -->
                             <div class="mb-3">
-                                <label for="taskDesc" class="form-label fw-medium">Descripción</label>
-                                <textarea class="form-control" id="taskDesc" rows="3" placeholder="Añade detalles sobre la tarea..."></textarea>
+                                <label for="taskDesc" class="form-label gta-label fw-bold">Detalles</label>
+                                <textarea class="form-control gta-input" id="taskDesc" rows="3"
+                                    placeholder="Añade instrucciones para la misión..."></textarea>
                             </div>
 
-                            <!-- Select Prioridad -->
-                            <div class="mb-4">
-                                <label for="taskPriority" class="form-label fw-medium">Prioridad</label>
-                                <select class="form-select" id="taskPriority">
+                            <div class="mb-3">
+                                <label for="taskPriority" class="form-label gta-label fw-bold">Nivel de Riesgo
+                                    (Prioridad)</label>
+                                <select class="form-select gta-input" id="taskPriority">
                                     <option value="Baja">Baja</option>
                                     <option value="Media" selected>Media</option>
                                     <option value="Alta">Alta</option>
                                 </select>
                             </div>
 
-                            <!-- Botón de Envío -->
-                            <button type="submit" class="btn btn-primary w-100 fw-bold d-flex align-items-center justify-content-center gap-2">
-                                <i class="bi bi-plus-lg"></i> Agregar tarea
+                            <div class="mb-4">
+                                <label for="taskDueDate" class="form-label gta-label fw-bold">Fecha Límite</label>
+                                <input type="date" class="form-control gta-input" id="taskDueDate">
+                            </div>
+
+                            <button type="submit"
+                                class="btn btn-gta-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-star-fill"></i> Iniciar Misión
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <!-- COLUMNA DERECHA: LISTA DE TAREAS (col-12 col-md-7 col-lg-8) -->
+            <!--TABLERO DE TAREAS-->
             <div class="col-12 col-md-7 col-lg-8">
-                <div class="card shadow-sm border-0">
+                <div class="card gta-card">
                     <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
-                            <h2 class="h5 card-title mb-0 fw-semibold">
-                                <i class="bi bi-list-task me-1"></i> Lista de tareas
-                            </h2>
-                            <span class="badge bg-secondary rounded-pill">3 pendientes</span>
-                        </div>
 
-                        <!-- Filtros Rápidos -->
-                        <div class="btn-group btn-group-sm mb-3 w-100" role="group">
-                            <button type="button" class="btn btn-outline-primary active">Todas</button>
-                            <button type="button" class="btn btn-outline-primary">Pendientes</button>
-                            <button type="button" class="btn btn-outline-primary">Completadas</button>
-                        </div>
-
-                        <!-- LISTA DE TARJETAS DE TAREA -->
-                        <div class="d-flex flex-column gap-3" id="taskList">
-                            
-                            <!-- Tarea 1 -->
-                            <div class="card border border-start border-4 border-start-danger shadow-sm">
-                                <div class="card-body d-flex align-items-start justify-content-between p-3">
-                                    <div class="d-flex align-items-start gap-3">
-                                        <input class="form-check-input mt-1" type="checkbox" id="task1">
-                                        <div>
-                                            <h3 class="h6 mb-1 fw-bold">Completar wireframe en Figma</h3>
-                                            <p class="text-muted small mb-2">Diseñar las pantallas principales utilizando componentes de Bootstrap.</p>
-                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle">Prioridad: Alta</span>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-sm btn-outline-danger border-0"><i class="bi bi-trash"></i></button>
-                                </div>
-                            </div>
-
-                            <!-- Tarea 2 -->
-                            <div class="card border border-start border-4 border-start-warning shadow-sm">
-                                <div class="card-body d-flex align-items-start justify-content-between p-3">
-                                    <div class="d-flex align-items-start gap-3">
-                                        <input class="form-check-input mt-1" type="checkbox" id="task2">
-                                        <div>
-                                            <h3 class="h6 mb-1 fw-bold">Revisión de pull request #123</h3>
-                                            <p class="text-muted small mb-2">Verificar los cambios integrados en la rama principal.</p>
-                                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Prioridad: Media</span>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-sm btn-outline-danger border-0"><i class="bi bi-trash"></i></button>
-                                </div>
-                            </div>
-
-                            <!-- Tarea 3 -->
-                            <div class="card border border-start border-4 border-start-info shadow-sm">
-                                <div class="card-body d-flex align-items-start justify-content-between p-3">
-                                    <div class="d-flex align-items-start gap-3">
-                                        <input class="form-check-input mt-1" type="checkbox" id="task3">
-                                        <div>
-                                            <h3 class="h6 mb-1 fw-bold">Configurar proyecto backend</h3>
-                                            <p class="text-muted small mb-2">Instalar dependencias necesarias y preparar el repositorio.</p>
-                                            <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle">Prioridad: Baja</span>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-sm btn-outline-danger border-0"><i class="bi bi-trash"></i></button>
-                                </div>
+                        <div
+                            class="d-flex flex-wrap justify-content-between align-items-center mb-3 border-bottom border-secondary pb-3 gap-2">
+                            <div>
+                                <h2 class="gta-card-title mb-0">
+                                    <i class="bi bi-journal-bookmark-fill me-2 text-warning"></i>Misiones
+                                </h2>
                             </div>
 
                         </div>
+                        <!--Filtros de estado -->
+                        <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-2">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-gta-outline active">Todas</button>
+                                <button type="button" class="btn btn-gta-outline">Pendientes</button>
+                                <button type="button" class="btn btn-gta-outline">Pasadas</button>
+                            </div>
+                        </div>
+                        <!--Tareas-->
+                        <div class="row g-3" id="taskList">
+
+                            <!-- Tarea 1: Prioridad alta -->
+                            <div class="col-12 col-lg-6">
+                                <div class="card h-100 gta-task-card border-gta-danger">
+                                    <div class="card-body d-flex flex-column justify-content-between p-3">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="badge badge-gta-danger rounded-pill">
+                                                    <i class="bi bi-exclamation-triangle-fill me-1"></i>Alta
+                                                </span>
+                                                <span
+                                                    class="extra-small d-flex align-items-center gap-1 task-date-danger">
+                                                    <i class="bi bi-calendar-event"></i>
+                                                    <strong>15/02/2026</strong>
+                                                </span>
+                                            </div>
+
+                                            <h3 class="h6 fw-bold mb-2 text-white">Completar wireframe en Figma</h3>
+                                            <p class="small mb-3 gta-task-desc">Diseñar las pantallas principales
+                                                utilizando componentes de Bootstrap.</p>
+                                        </div>
+
+                                        <div
+                                            class="pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="checkbox" id="task1">
+                                                <label class="form-check-label small ms-1 gta-text-muted" for="task1">
+                                                    Completar
+                                                </label>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn btn-sm btn-gta-edit p-0" title="Editar misión">
+                                                    <i class="bi bi-pencil-square fs-6"></i>
+                                                </button>
+                                                <button class="btn btn-sm text-danger p-0" title="Eliminar misión">
+                                                    <i class="bi bi-trash-fill fs-6"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tarea 2: Prioridad Media -->
+                            <div class="col-12 col-lg-6">
+                                <div class="card h-100 gta-task-card border-gta-warning">
+                                    <div class="card-body d-flex flex-column justify-content-between p-3">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="badge badge-gta-warning rounded-pill">
+                                                    <i class="bi bi-dash-circle-fill me-1"></i>Media
+                                                </span>
+                                                <span
+                                                    class="extra-small d-flex align-items-center gap-1 task-date-warning">
+                                                    <i class="bi bi-calendar-event"></i>
+                                                    <strong>18/02/2026</strong>
+                                                </span>
+                                            </div>
+
+                                            <h3 class="h6 fw-bold mb-2 text-white">Revisión de trello</h3>
+                                            <p class="small mb-3 gta-task-desc">Verificar los cambios integrados en la
+                                                rama principal y nuevas tareas agregadas al print.</p>
+                                        </div>
+
+                                        <div
+                                            class="pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="checkbox" id="task2">
+                                                <label class="form-check-label small ms-1 gta-text-muted" for="task2">
+                                                    Completar
+                                                </label>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn btn-sm btn-gta-edit p-0" title="Editar misión">
+                                                    <i class="bi bi-pencil-square fs-6"></i>
+                                                </button>
+                                                <button class="btn btn-sm text-danger p-0" title="Eliminar misión">
+                                                    <i class="bi bi-trash-fill fs-6"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tarea 3: Tarea completada -->
+                            <div class="col-12 col-lg-6">
+                                <div class="card h-100 gta-task-card border-gta-success gta-task-completed">
+                                    <div class="card-body d-flex flex-column justify-content-between p-3">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="badge badge-gta-success rounded-pill">
+                                                    <i class="bi bi-check-circle-fill me-1"></i>Mission Passed
+                                                </span>
+                                                <span
+                                                    class="extra-small d-flex align-items-center gap-1 task-date-success">
+                                                    <i class="bi bi-calendar-event"></i>
+                                                    <span>20/02/2026</span>
+                                                </span>
+                                            </div>
+
+                                            <h3 class="h6 fw-bold mb-2 task-title">Configurar proyecto backend</h3>
+                                            <p class="small mb-3 task-desc">Instalar dependencias necesarias y preparar
+                                                el repositorio.</p>
+                                        </div>
+
+                                        <div
+                                            class="pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="checkbox" id="task3" checked>
+                                                <label class="form-check-label small ms-1 text-success fw-bold"
+                                                    for="task3">
+                                                    Superada
+                                                </label>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn btn-sm btn-gta-edit p-0" title="Editar misión">
+                                                    <i class="bi bi-pencil-square fs-6"></i>
+                                                </button>
+                                                <button class="btn btn-sm text-danger p-0" title="Eliminar misión">
+                                                    <i class="bi bi-trash-fill fs-6"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tarea 4 -->
+                            <div class="col-12 col-lg-6">
+                                <div class="card h-100 gta-task-card border-gta-warning">
+                                    <div class="card-body d-flex flex-column justify-content-between p-3">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="badge badge-gta-warning rounded-pill">
+                                                    <i class="bi bi-dash-circle-fill me-1"></i>Media
+                                                </span>
+                                                <span
+                                                    class="extra-small d-flex align-items-center gap-1 task-date-warning">
+                                                    <i class="bi bi-calendar-event"></i>
+                                                    <strong>18/06/2026</strong>
+                                                </span>
+                                            </div>
+
+                                            <h3 class="h6 fw-bold mb-2 text-white">Revisión de repositorio en GitHub
+                                            </h3>
+                                            <p class="small mb-3 gta-task-desc">Verificar que no haya conflicto con las
+                                                ramas.</p>
+                                        </div>
+
+                                        <div
+                                            class="pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="checkbox" id="task4">
+                                                <label class="form-check-label small ms-1 gta-text-muted" for="task4">
+                                                    Completar
+                                                </label>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn btn-sm btn-gta-edit p-0" title="Editar misión">
+                                                    <i class="bi bi-pencil-square fs-6"></i>
+                                                </button>
+                                                <button class="btn btn-sm text-danger p-0" title="Eliminar misión">
+                                                    <i class="bi bi-trash-fill fs-6"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tarea 5 -->
+                            <div class="col-12 col-lg-6">
+                                <div class="card h-100 gta-task-card border-gta-warning">
+                                    <div class="card-body d-flex flex-column justify-content-between p-3">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="badge badge-gta-warning rounded-pill">
+                                                    <i class="bi bi-dash-circle-fill me-1"></i>Media
+                                                </span>
+                                                <span
+                                                    class="extra-small d-flex align-items-center gap-1 task-date-warning">
+                                                    <i class="bi bi-calendar-event"></i>
+                                                    <strong>14/03/2026</strong>
+                                                </span>
+                                            </div>
+
+                                            <h3 class="h6 fw-bold mb-2 text-white">Daily para corroborar cambios nuevos
+                                            </h3>
+                                            <p class="small mb-3 gta-task-desc">Necesitamos hablar sobre los cambios
+                                                nuevos que se implementaron la semana pasada y ver el avance.</p>
+                                        </div>
+
+                                        <div
+                                            class="pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" type="checkbox" id="task5">
+                                                <label class="form-check-label small ms-1 gta-text-muted" for="task5">
+                                                    Completar
+                                                </label>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn btn-sm btn-gta-edit p-0" title="Editar misión">
+                                                    <i class="bi bi-pencil-square fs-6"></i>
+                                                </button>
+                                                <button class="btn btn-sm text-danger p-0" title="Eliminar misión">
+                                                    <i class="bi bi-trash-fill fs-6"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--Tareas-->
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
