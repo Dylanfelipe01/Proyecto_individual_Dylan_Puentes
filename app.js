@@ -1,3 +1,4 @@
+// 1. Función de validación de campos
 function validFormFieldInput(data) {
     const { title, description, priority, status, dueDate } = data;
 
@@ -10,28 +11,26 @@ function validFormFieldInput(data) {
     return true;
 }
 
-
+// 2. Selección de elementos del DOM
 const taskForm = document.querySelector('#taskForm');
 const alertError = document.querySelector('#alertError');
 const taskList = document.querySelector('#taskList');
 const filterButtons = document.querySelectorAll('#filterGroup button');
+const submitBtn = taskForm.querySelector('button[type="submit"]');
 
+// Variable para controlar si estamos editando
+let currentEditCard = null;
 
+// 3. Event Listener del formulario (Crear o Actualizar)
 taskForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const titleValue = document.querySelector('#taskTitle').value;
-    const descValue = document.querySelector('#taskDesc').value;
-    const priorityValue = document.querySelector('#taskPriority').value;
-    const statusValue = document.querySelector('#taskStatus').value;
-    const dueDateValue = document.querySelector('#taskDueDate').value;
-
     const taskData = {
-        title: titleValue,
-        description: descValue,
-        priority: priorityValue,
-        status: statusValue,
-        dueDate: dueDateValue
+        title: document.querySelector('#taskTitle').value,
+        description: document.querySelector('#taskDesc').value,
+        priority: document.querySelector('#taskPriority').value,
+        status: document.querySelector('#taskStatus').value,
+        dueDate: document.querySelector('#taskDueDate').value
     };
 
     const isValid = validFormFieldInput(taskData);
@@ -41,21 +40,46 @@ taskForm.addEventListener('submit', (event) => {
     } else {
         alertError.classList.add('d-none');
 
-   
-        createTaskCard(taskData);
-
-       
-        const activeFilterBtn = document.querySelector('#filterGroup button.active');
-        if (activeFilterBtn) {
-            applyFilter(activeFilterBtn.getAttribute('data-filter'));
+        if (currentEditCard) {
+            updateTaskCard(currentEditCard, taskData);
+            resetFormState();
+        } else {
+            createTaskCard(taskData);
+            taskForm.reset();
         }
 
-        taskForm.reset();
+        refreshCurrentFilter();
     }
 });
 
-
+// 4. Crear nueva tarjeta
 function createTaskCard(task) {
+    const colDiv = document.createElement('div');
+    colDiv.className = 'col-12 col-lg-6';
+
+    setCardDatasets(colDiv, task);
+    renderCardContent(colDiv, task);
+
+    taskList.prepend(colDiv);
+}
+
+// 5. Actualizar tarjeta existente
+function updateTaskCard(cardElement, task) {
+    setCardDatasets(cardElement, task);
+    renderCardContent(cardElement, task);
+}
+
+// Auxiliar: Almacenar datasets
+function setCardDatasets(element, task) {
+    element.dataset.title = task.title;
+    element.dataset.description = task.description;
+    element.dataset.priority = task.priority;
+    element.dataset.status = task.status;
+    element.dataset.dueDate = task.dueDate;
+}
+
+// Auxiliar: Renderizar contenido HTML
+function renderCardContent(colDiv, task) {
     let borderClass = 'border-gta-warning';
     let badgeClass = 'badge-gta-warning';
 
@@ -67,14 +91,10 @@ function createTaskCard(task) {
         badgeClass = 'badge-gta-success';
     }
 
-    const colDiv = document.createElement('div');
-    colDiv.className = 'col-12 col-lg-6';
-    
-   
-    colDiv.setAttribute('data-status', task.status);
+    const isCompleted = task.status === 'Completada';
 
     colDiv.innerHTML = `
-        <div class="card h-100 gta-task-card ${borderClass}">
+        <div class="card h-100 gta-task-card ${borderClass} ${isCompleted ? 'opacity-75' : ''}">
             <div class="card-body d-flex flex-column justify-content-between p-3">
                 <div>
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -87,17 +107,24 @@ function createTaskCard(task) {
                         </span>
                     </div>
 
-                    <h3 class="h6 fw-bold mb-2 text-white">${task.title}</h3>
-                    <p class="small mb-3 gta-task-desc">${task.description}</p>
+                    <h3 class="h6 fw-bold mb-2 text-white ${isCompleted ? 'text-decoration-line-through text-white' : ''}">${task.title}</h3>
+                    <p class="small mb-3 gta-task-desc ${isCompleted ? 'text-white' : ''}">${task.description}</p>
                 </div>
 
                 <div class="pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
-                    <span class="badge bg-dark border border-secondary text-warning">${task.status}</span>
+                    <!-- CHECKBOX DE COMPLETADO + BADGE DE ESTADO -->
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="form-check m-0">
+                            <input class="form-check-input chk-complete" type="checkbox" ${isCompleted ? 'checked' : ''} title="Marcar como completada">
+                        </div>
+                        <span class="badge bg-dark border border-secondary text-warning status-badge">${task.status}</span>
+                    </div>
+
                     <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-gta-edit p-0" title="Editar misión">
+                        <button class="btn btn-sm btn-gta-edit p-0 btn-edit" title="Editar misión">
                             <i class="bi bi-pencil-square fs-6"></i>
                         </button>
-                        <button class="btn btn-sm text-danger p-0" title="Eliminar misión" onclick="this.closest('.col-12').remove()">
+                        <button class="btn btn-sm text-danger p-0 btn-delete" title="Eliminar misión">
                             <i class="bi bi-trash-fill fs-6"></i>
                         </button>
                     </div>
@@ -106,41 +133,92 @@ function createTaskCard(task) {
         </div>
     `;
 
-    taskList.prepend(colDiv);
+    // 🟢 EVENTO DEL CHECKBOX (Chulear para completar)
+    const chkComplete = colDiv.querySelector('.chk-complete');
+    chkComplete.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            colDiv.dataset.status = 'Completada';
+        } else {
+            colDiv.dataset.status = 'Pendiente';
+        }
+
+        // Re-renderizamos para refrescar estilos, badges y datasets
+        renderCardContent(colDiv, {
+            title: colDiv.dataset.title,
+            description: colDiv.dataset.description,
+            priority: colDiv.dataset.priority,
+            status: colDiv.dataset.status,
+            dueDate: colDiv.dataset.dueDate
+        });
+
+        // Actualizar la vista del filtro si el usuario está filtrando
+        refreshCurrentFilter();
+    });
+
+    // Evento de Editar
+    colDiv.querySelector('.btn-edit').addEventListener('click', () => {
+        populateFormForEdit(colDiv);
+    });
+
+    // Evento de Eliminar
+    colDiv.querySelector('.btn-delete').addEventListener('click', () => {
+        if (currentEditCard === colDiv) {
+            resetFormState();
+        }
+        colDiv.remove();
+        refreshCurrentFilter();
+    });
 }
 
+// 6. Cargar datos para editar
+function populateFormForEdit(cardElement) {
+    currentEditCard = cardElement;
 
+    document.querySelector('#taskTitle').value = cardElement.dataset.title;
+    document.querySelector('#taskDesc').value = cardElement.dataset.description;
+    document.querySelector('#taskPriority').value = cardElement.dataset.priority;
+    document.querySelector('#taskStatus').value = cardElement.dataset.status;
+    document.querySelector('#taskDueDate').value = cardElement.dataset.dueDate;
+
+    submitBtn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Actualizar Misión';
+    submitBtn.classList.replace('btn-gta-primary', 'btn-warning');
+}
+
+// 7. Resetear formulario
+function resetFormState() {
+    currentEditCard = null;
+    taskForm.reset();
+
+    submitBtn.innerHTML = '<i class="bi bi-star-fill"></i> Iniciar Misión';
+    submitBtn.classList.replace('btn-warning', 'btn-gta-primary');
+}
+
+// 8. Lógica de Filtrado
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
-     
         filterButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
 
-        
         const filterType = button.getAttribute('data-filter');
         applyFilter(filterType);
     });
 });
 
 function applyFilter(filterType) {
- 
     const taskCards = document.querySelectorAll('#taskList > div');
 
     taskCards.forEach(card => {
-        const cardStatus = card.getAttribute('data-status');
+        const cardStatus = card.dataset.status;
 
         if (filterType === 'todas') {
-         
             card.classList.remove('d-none');
         } else if (filterType === 'pendientes') {
-           
             if (cardStatus === 'Pendiente' || cardStatus === 'En Proceso') {
                 card.classList.remove('d-none');
             } else {
                 card.classList.add('d-none');
             }
         } else if (filterType === 'pasadas') {
-           
             if (cardStatus === 'Completada') {
                 card.classList.remove('d-none');
             } else {
@@ -148,4 +226,11 @@ function applyFilter(filterType) {
             }
         }
     });
+}
+
+function refreshCurrentFilter() {
+    const activeFilterBtn = document.querySelector('#filterGroup button.active');
+    if (activeFilterBtn) {
+        applyFilter(activeFilterBtn.getAttribute('data-filter'));
+    }
 }
