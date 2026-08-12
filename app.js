@@ -11,17 +11,16 @@ function validFormFieldInput(data) {
     return true;
 }
 
-// 2. Selección de elementos del DOM
+
 const taskForm = document.querySelector('#taskForm');
 const alertError = document.querySelector('#alertError');
 const taskList = document.querySelector('#taskList');
 const filterButtons = document.querySelectorAll('#filterGroup button');
 const submitBtn = taskForm.querySelector('button[type="submit"]');
 
-// Variable para controlar si estamos editando
 let currentEditCard = null;
 
-// 3. Event Listener del formulario (Crear o Actualizar)
+
 taskForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -52,7 +51,7 @@ taskForm.addEventListener('submit', (event) => {
     }
 });
 
-// 4. Crear nueva tarjeta
+
 function createTaskCard(task) {
     const colDiv = document.createElement('div');
     colDiv.className = 'col-12 col-lg-6';
@@ -63,13 +62,13 @@ function createTaskCard(task) {
     taskList.prepend(colDiv);
 }
 
-// 5. Actualizar tarjeta existente
+
 function updateTaskCard(cardElement, task) {
     setCardDatasets(cardElement, task);
     renderCardContent(cardElement, task);
 }
 
-// Auxiliar: Almacenar datasets
+
 function setCardDatasets(element, task) {
     element.dataset.title = task.title;
     element.dataset.description = task.description;
@@ -78,7 +77,7 @@ function setCardDatasets(element, task) {
     element.dataset.dueDate = task.dueDate;
 }
 
-// Auxiliar: Renderizar contenido HTML
+
 function renderCardContent(colDiv, task) {
     let borderClass = 'border-gta-warning';
     let badgeClass = 'badge-gta-warning';
@@ -133,7 +132,7 @@ function renderCardContent(colDiv, task) {
         </div>
     `;
 
-    // 🟢 EVENTO DEL CHECKBOX (Chulear para completar)
+   
     const chkComplete = colDiv.querySelector('.chk-complete');
     chkComplete.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -142,7 +141,7 @@ function renderCardContent(colDiv, task) {
             colDiv.dataset.status = 'Pendiente';
         }
 
-        // Re-renderizamos para refrescar estilos, badges y datasets
+       
         renderCardContent(colDiv, {
             title: colDiv.dataset.title,
             description: colDiv.dataset.description,
@@ -151,16 +150,16 @@ function renderCardContent(colDiv, task) {
             dueDate: colDiv.dataset.dueDate
         });
 
-        // Actualizar la vista del filtro si el usuario está filtrando
+     
         refreshCurrentFilter();
     });
 
-    // Evento de Editar
+   
     colDiv.querySelector('.btn-edit').addEventListener('click', () => {
         populateFormForEdit(colDiv);
     });
 
-    // Evento de Eliminar
+    
     colDiv.querySelector('.btn-delete').addEventListener('click', () => {
         if (currentEditCard === colDiv) {
             resetFormState();
@@ -170,7 +169,7 @@ function renderCardContent(colDiv, task) {
     });
 }
 
-// 6. Cargar datos para editar
+
 function populateFormForEdit(cardElement) {
     currentEditCard = cardElement;
 
@@ -184,7 +183,7 @@ function populateFormForEdit(cardElement) {
     submitBtn.classList.replace('btn-gta-primary', 'btn-warning');
 }
 
-// 7. Resetear formulario
+
 function resetFormState() {
     currentEditCard = null;
     taskForm.reset();
@@ -193,7 +192,7 @@ function resetFormState() {
     submitBtn.classList.replace('btn-warning', 'btn-gta-primary');
 }
 
-// 8. Lógica de Filtrado
+
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
         filterButtons.forEach(btn => btn.classList.remove('active'));
