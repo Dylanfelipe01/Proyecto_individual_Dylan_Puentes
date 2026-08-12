@@ -109,13 +109,14 @@
 
                         <!-- Filtros de estado -->
                         <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-2">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-gta-outline active">Todas</button>
-                                <button type="button" class="btn btn-gta-outline">Pendientes</button>
-                                <button type="button" class="btn btn-gta-outline">Pasadas</button>
+                            <div class="btn-group btn-group-sm" role="group" id="filterGroup">
+                                <button type="button" class="btn btn-gta-outline active"
+                                    data-filter="todas">Todas</button>
+                                <button type="button" class="btn btn-gta-outline"
+                                    data-filter="pendientes">Pendientes</button>
+                                <button type="button" class="btn btn-gta-outline" data-filter="pasadas">Pasadas</button>
                             </div>
                         </div>
-
 
                         <div class="row g-3" id="taskList">
 

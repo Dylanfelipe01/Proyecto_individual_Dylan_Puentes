@@ -14,12 +14,12 @@ function validFormFieldInput(data) {
 const taskForm = document.querySelector('#taskForm');
 const alertError = document.querySelector('#alertError');
 const taskList = document.querySelector('#taskList');
+const filterButtons = document.querySelectorAll('#filterGroup button');
 
 
 taskForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-   
     const titleValue = document.querySelector('#taskTitle').value;
     const descValue = document.querySelector('#taskDesc').value;
     const priorityValue = document.querySelector('#taskPriority').value;
@@ -34,7 +34,6 @@ taskForm.addEventListener('submit', (event) => {
         dueDate: dueDateValue
     };
 
-   
     const isValid = validFormFieldInput(taskData);
 
     if (!isValid) {
@@ -42,16 +41,21 @@ taskForm.addEventListener('submit', (event) => {
     } else {
         alertError.classList.add('d-none');
 
+   
         createTaskCard(taskData);
 
        
+        const activeFilterBtn = document.querySelector('#filterGroup button.active');
+        if (activeFilterBtn) {
+            applyFilter(activeFilterBtn.getAttribute('data-filter'));
+        }
+
         taskForm.reset();
     }
 });
 
 
 function createTaskCard(task) {
-   
     let borderClass = 'border-gta-warning';
     let badgeClass = 'badge-gta-warning';
 
@@ -63,11 +67,12 @@ function createTaskCard(task) {
         badgeClass = 'badge-gta-success';
     }
 
-   
     const colDiv = document.createElement('div');
     colDiv.className = 'col-12 col-lg-6';
-
+    
    
+    colDiv.setAttribute('data-status', task.status);
+
     colDiv.innerHTML = `
         <div class="card h-100 gta-task-card ${borderClass}">
             <div class="card-body d-flex flex-column justify-content-between p-3">
@@ -101,6 +106,46 @@ function createTaskCard(task) {
         </div>
     `;
 
-   
     taskList.prepend(colDiv);
+}
+
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+     
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        
+        const filterType = button.getAttribute('data-filter');
+        applyFilter(filterType);
+    });
+});
+
+function applyFilter(filterType) {
+ 
+    const taskCards = document.querySelectorAll('#taskList > div');
+
+    taskCards.forEach(card => {
+        const cardStatus = card.getAttribute('data-status');
+
+        if (filterType === 'todas') {
+         
+            card.classList.remove('d-none');
+        } else if (filterType === 'pendientes') {
+           
+            if (cardStatus === 'Pendiente' || cardStatus === 'En Proceso') {
+                card.classList.remove('d-none');
+            } else {
+                card.classList.add('d-none');
+            }
+        } else if (filterType === 'pasadas') {
+           
+            if (cardStatus === 'Completada') {
+                card.classList.remove('d-none');
+            } else {
+                card.classList.add('d-none');
+            }
+        }
+    });
 }
