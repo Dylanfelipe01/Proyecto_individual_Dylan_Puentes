@@ -232,3 +232,6 @@ function refreshCurrentFilter() {
         applyFilter(activeFilterBtn.getAttribute('data-filter'));
     }
 }
+
+const taskManager = new TaskManager();
+console.log(taskManager.tasks);
