@@ -1,4 +1,3 @@
-// 1. Función de validación de campos
 function validFormFieldInput(data) {
     const { title, description, priority, status, dueDate } = data;
 
