@@ -1,3 +1,15 @@
+
+const taskManager = new TaskManager();
+
+const taskForm = document.querySelector('#taskForm');
+const alertError = document.querySelector('#alertError');
+const taskList = document.querySelector('#taskList');
+const filterButtons = document.querySelectorAll('#filterGroup button');
+const submitBtn = taskForm.querySelector('button[type="submit"]');
+
+let currentEditCard = null;
+
+
 function validFormFieldInput(data) {
     const { title, description, priority, status, dueDate } = data;
 
@@ -11,26 +23,18 @@ function validFormFieldInput(data) {
 }
 
 
-const taskForm = document.querySelector('#taskForm');
-const alertError = document.querySelector('#alertError');
-const taskList = document.querySelector('#taskList');
-const filterButtons = document.querySelectorAll('#filterGroup button');
-const submitBtn = taskForm.querySelector('button[type="submit"]');
-
-let currentEditCard = null;
-
-
 taskForm.addEventListener('submit', (event) => {
+   
     event.preventDefault();
 
-    const taskData = {
-        title: document.querySelector('#taskTitle').value,
-        description: document.querySelector('#taskDesc').value,
-        priority: document.querySelector('#taskPriority').value,
-        status: document.querySelector('#taskStatus').value,
-        dueDate: document.querySelector('#taskDueDate').value
-    };
+  
+    const title = document.querySelector('#taskTitle').value;
+    const description = document.querySelector('#taskDesc').value;
+    const priority = document.querySelector('#taskPriority').value;
+    const status = document.querySelector('#taskStatus').value;
+    const dueDate = document.querySelector('#taskDueDate').value;
 
+    const taskData = { title, description, priority, status, dueDate };
     const isValid = validFormFieldInput(taskData);
 
     if (!isValid) {
@@ -42,7 +46,16 @@ taskForm.addEventListener('submit', (event) => {
             updateTaskCard(currentEditCard, taskData);
             resetFormState();
         } else {
+           
+            taskManager.addTask(title, description, dueDate, status);
+
+         
+            console.log(taskManager.tasks);
+
+            
             createTaskCard(taskData);
+
+            
             taskForm.reset();
         }
 
@@ -61,12 +74,10 @@ function createTaskCard(task) {
     taskList.prepend(colDiv);
 }
 
-
 function updateTaskCard(cardElement, task) {
     setCardDatasets(cardElement, task);
     renderCardContent(cardElement, task);
 }
-
 
 function setCardDatasets(element, task) {
     element.dataset.title = task.title;
@@ -75,7 +86,6 @@ function setCardDatasets(element, task) {
     element.dataset.status = task.status;
     element.dataset.dueDate = task.dueDate;
 }
-
 
 function renderCardContent(colDiv, task) {
     let borderClass = 'border-gta-warning';
@@ -110,7 +120,6 @@ function renderCardContent(colDiv, task) {
                 </div>
 
                 <div class="pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
-                    <!-- CHECKBOX DE COMPLETADO + BADGE DE ESTADO -->
                     <div class="d-flex align-items-center gap-2">
                         <div class="form-check m-0">
                             <input class="form-check-input chk-complete" type="checkbox" ${isCompleted ? 'checked' : ''} title="Marcar como completada">
@@ -131,7 +140,6 @@ function renderCardContent(colDiv, task) {
         </div>
     `;
 
-   
     const chkComplete = colDiv.querySelector('.chk-complete');
     chkComplete.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -140,7 +148,6 @@ function renderCardContent(colDiv, task) {
             colDiv.dataset.status = 'Pendiente';
         }
 
-       
         renderCardContent(colDiv, {
             title: colDiv.dataset.title,
             description: colDiv.dataset.description,
@@ -149,16 +156,13 @@ function renderCardContent(colDiv, task) {
             dueDate: colDiv.dataset.dueDate
         });
 
-     
         refreshCurrentFilter();
     });
 
-   
     colDiv.querySelector('.btn-edit').addEventListener('click', () => {
         populateFormForEdit(colDiv);
     });
 
-    
     colDiv.querySelector('.btn-delete').addEventListener('click', () => {
         if (currentEditCard === colDiv) {
             resetFormState();
@@ -167,7 +171,6 @@ function renderCardContent(colDiv, task) {
         refreshCurrentFilter();
     });
 }
-
 
 function populateFormForEdit(cardElement) {
     currentEditCard = cardElement;
@@ -182,7 +185,6 @@ function populateFormForEdit(cardElement) {
     submitBtn.classList.replace('btn-gta-primary', 'btn-warning');
 }
 
-
 function resetFormState() {
     currentEditCard = null;
     taskForm.reset();
@@ -190,7 +192,6 @@ function resetFormState() {
     submitBtn.innerHTML = '<i class="bi bi-star-fill"></i> Iniciar Misión';
     submitBtn.classList.replace('btn-warning', 'btn-gta-primary');
 }
-
 
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -232,6 +233,3 @@ function refreshCurrentFilter() {
         applyFilter(activeFilterBtn.getAttribute('data-filter'));
     }
 }
-
-const taskManager = new TaskManager();
-console.log(taskManager.tasks);
