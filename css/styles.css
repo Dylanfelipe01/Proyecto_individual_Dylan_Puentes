@@ -4,7 +4,7 @@ body {
     font-family: 'Changa', sans-serif;
 }
 
-
+/* HEADER */
 .app-header {
     background: linear-gradient(135deg, #2b261f 0%, #171512 100%);
     border: 3px solid #d0b884;
@@ -33,7 +33,7 @@ body {
     letter-spacing: 2px;
 }
 
-
+/* CONTENEDORES Y TARJETAS */
 .app-card {
     background-color: #26221c !important;
     border: 3px solid #000000 !important;
@@ -49,7 +49,7 @@ body {
     text-transform: uppercase;
 }
 
-
+/* FORMULARIOS E INPUTS */
 .app-input {
     background-color: #171512 !important;
     border: 2px solid #574b39 !important;
@@ -69,7 +69,7 @@ body {
     letter-spacing: 1px;
 }
 
-
+/* BOTONES */
 .btn-theme-primary {
     background-color: #d0b884;
     color: #000000;
@@ -104,7 +104,7 @@ body {
     border-color: #000;
 }
 
-
+/* TARJETAS DE TAREAS */
 .app-task-card {
     background-color: #1f1b16;
     border: 2px solid #000;
@@ -117,18 +117,44 @@ body {
     box-shadow: 6px 6px 0px #000;
 }
 
+/* TITULO Y DESCRIPCIÓN DE LA TAREA (EN BLANCO VISIBLE) */
+.task-title {
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
 
+.app-task-desc {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+/* TEXTO PARA TAREAS COMPLETADAS */
+.completed .task-title,
+.completed .app-task-desc,
+.app-task-completed .task-title,
+.app-task-completed .task-desc {
+    color: #8c8273 !important;
+    text-decoration: line-through;
+}
+
+/* BORDES DE PRIORIDAD */
 .border-theme-danger { border-top: 5px solid #ff4d4d !important; }
 .border-theme-warning { border-top: 5px solid #ffaa00 !important; }
 .border-theme-success { border-top: 5px solid #2ecc71 !important; }
 
-
+/* BADGES DE PRIORIDAD */
 .badge-theme-danger { background-color: #3b1111; color: #ff6b6b; border: 1px solid #ff4d4d; }
 .badge-theme-warning { background-color: #3b2b11; color: #ffd166; border: 1px solid #ffaa00; }
 .badge-theme-success { background-color: #113b1f; color: #6bcc8b; border: 1px solid #2ecc71; }
 .badge-theme-info { background-color: #29241c; color: #d0b884; border: 1px solid #574b39; }
 
+/* FECHAS */
+.task-date-danger { color: #ff6b6b; }
+.task-date-warning { color: #ffd166; }
+.task-date-success { color: #6bcc8b; }
 
+/* OTROS ELEMENTOS */
 .form-check-input:checked {
     background-color: #d0b884;
     border-color: #000;
@@ -138,34 +164,8 @@ body {
     font-size: 0.8rem;
 }
 
-.app-task-desc {
-    color: #b0a38b;
-}
-
-.task-date-danger {
-    color: #ff6b6b;
-}
-
-.task-date-warning {
-    color: #ffd166;
-}
-
-.task-date-success {
-    color: #6bcc8b;
-}
-
-
 .app-text-muted {
     color: #a09275;
-}
-
-.app-task-completed .task-title {
-    color: #8c8273 !important;
-    text-decoration: line-through;
-}
-
-.app-task-completed .task-desc {
-    color: #6e6558 !important;
 }
 
 .btn-theme-edit {
