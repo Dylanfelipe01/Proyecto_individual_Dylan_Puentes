@@ -60,20 +60,20 @@ function renderAllTasks() {
 
         colDiv.dataset.id = task.id;
 
-        const cardNode = colDiv.querySelector('.gta-task-card');
+        const cardNode = colDiv.querySelector('.app-task-card');
         const priorityBadge = colDiv.querySelector('.priority-badge');
         const isCompleted = task.status === 'Completada';
 
         // Clases según prioridad
         if (task.priority === 'Alta') {
-            cardNode.classList.add('border-gta-danger');
-            priorityBadge.classList.add('badge-gta-danger');
+            cardNode.classList.add('border-theme-danger');
+            priorityBadge.classList.add('badge-theme-danger');
         } else if (task.priority === 'Baja') {
-            cardNode.classList.add('border-gta-success');
-            priorityBadge.classList.add('badge-gta-success');
+            cardNode.classList.add('border-theme-success');
+            priorityBadge.classList.add('badge-theme-success');
         } else {
-            cardNode.classList.add('border-gta-warning');
-            priorityBadge.classList.add('badge-gta-warning');
+            cardNode.classList.add('border-theme-warning');
+            priorityBadge.classList.add('badge-theme-warning');
         }
 
         // Tarea completada
@@ -126,7 +126,7 @@ function populateFormForEdit(task) {
     document.querySelector('#taskDueDate').value = task.dueDate;
 
     submitBtn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Actualizar Misión';
-    submitBtn.classList.replace('btn-gta-primary', 'btn-warning');
+    submitBtn.classList.replace('btn-theme-primary', 'btn-warning');
 }
 
 function resetFormState() {
@@ -134,7 +134,7 @@ function resetFormState() {
     taskForm.reset();
 
     submitBtn.innerHTML = '<i class="bi bi-star-fill"></i> Iniciar Misión';
-    submitBtn.classList.replace('btn-warning', 'btn-gta-primary');
+    submitBtn.classList.replace('btn-warning', 'btn-theme-primary');
 }
 
 // Filtros
