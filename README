@@ -1,38 +1,33 @@
-# 🗺️ Planificador de Tareas - Special Edition
+Planificador de Tareas - Special Edition
 
 Aplicación web interactiva para la gestión y seguimiento de objetivos en formato de misiones, desarrollada como proyecto práctico de desarrollo frontend.
 
----
-
-## 📖 Acerca del Proyecto
+Acerca del Proyecto
 
 El proyecto inició con una base funcional estándar construida sobre Bootstrap. Con el tiempo, la interfaz fue completamente rediseñada bajo una estética inspirada en el universo y la identidad visual de un video juego.
 
 A través de fondos texturizados tipo mapa/pergamino, tipografías urbanas y una paleta de colores táctica oscura con acentos dorados, la aplicación transforma la organización de pendientes en un panel temático de asignación de misiones.
 
----
 
-## ⚡ Características y Funcionalidades
+Características y Funcionalidades
 
-* **Creación de Misiones:** Registro de tareas con nombre, descripción, fecha límite, nivel de riesgo (prioridad) y estado inicial.
-* **Gestión Completa (CRUD en interfaz):** Edición interactiva de tareas existentes y eliminación individual.
-* **Filtros por Estado:** Clasificación dinámica entre *Todas*, *Pendientes* (incluyendo en proceso) y *Completadas*.
-* **HUD de Progreso (Barra de Respeto):** Cálculo automático del porcentaje de cumplimiento conforme se completan los objetivos.
-* **Diseño Responsivo:** Adaptación fluida para diferentes resoluciones de pantalla utilizando Bootstrap 5 y CSS personalizado.
+* Creación de Misiones:** Registro de tareas con nombre, descripción, fecha límite, nivel de riesgo (prioridad) y estado inicial.
+* Gestión Completa (CRUD en interfaz):** Edición interactiva de tareas existentes y eliminación individual.
+* Filtros por Estado:** Clasificación dinámica entre *Todas*, *Pendientes* (incluyendo en proceso) y *Completadas*.
+* HUD de Progreso (Barra de Respeto):** Cálculo automático del porcentaje de cumplimiento conforme se completan los objetivos.
+* Diseño Responsivo:** Adaptación fluida para diferentes resoluciones de pantalla utilizando Bootstrap 5 y CSS personalizado.
 
----
 
-## 🛠️ Tecnologías Utilizadas
+Tecnologías Utilizadas
 
-* **HTML5:** Marcado semántico y estructura base mediante templates.
-* **CSS3:** Estilos personalizados, gradientes, sombras duras e integración de fuentes de Google Fonts (*Rubik Glitch*, *Teko*, *Rajdhani*).
-* **JavaScript (Vanilla):** Programación orientada a objetos (`TaskManager`), manipulación del DOM y manejo de eventos reactivos.
-* **Bootstrap 5 & Bootstrap Icons:** Rejilla responsiva, utilidades y paquetización de iconos.
+* HTML5:** Marcado semántico y estructura base mediante templates.
+* CSS3:** Estilos personalizados, gradientes, sombras duras e integración de fuentes de Google Fonts (*Rubik Glitch*, *Teko*, *Rajdhani*).
+* JavaScript (Vanilla):** Programación orientada a objetos (`TaskManager`), manipulación del DOM y manejo de eventos reactivos.
+* Bootstrap 5 & Bootstrap Icons:** Rejilla responsiva, utilidades y paquetización de iconos.
 
----
 
-## 🔗 Enlaces del Proyecto
+Enlaces del Proyecto
 
-* **Tablero en Trello (Gestión):** [Ver planeación en Trello](https://trello.com/invite/b/6a6ba38e90adf254f1250e6b/ATTI78bebef1f6fb96bbf91ed1bd322e35a734107CAF/proyecto-individual)
-* **Prototipo en Figma:** [Ver diseño en Figma](https://www.figma.com/design/lgl0S0qUwZNxSJyQPnU9v4/Untitled?node-id=0-1&t=DTXozuWtefVobpGV-1)
-* **Sitio en Producción (Deploy):** [Ver Demo en GitHub Pages](https://dylanfelipe01.github.io/Proyecto_individual_Dylan_Puentes/)
+* Tablero en Trello (Gestión):** [Ver planeación en Trello](https://trello.com/invite/b/6a6ba38e90adf254f1250e6b/ATTI78bebef1f6fb96bbf91ed1bd322e35a734107CAF/proyecto-individual)
+* Prototipo en Figma:** [Ver diseño en Figma](https://www.figma.com/design/lgl0S0qUwZNxSJyQPnU9v4/Untitled?node-id=0-1&t=DTXozuWtefVobpGV-1)
+* Sitio en Producción (Deploy):** [Ver Demo en GitHub Pages](https://dylanfelipe01.github.io/Proyecto_individual_Dylan_Puentes/)
