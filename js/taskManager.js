@@ -47,4 +47,11 @@ class TaskManager {
         }
         return task;
     }
+
+    
+    getRespectLevel() {
+        if (this.tasks.length === 0) return 0;
+        const completedTasks = this.tasks.filter(task => task.status === 'Completada').length;
+        return Math.round((completedTasks / this.tasks.length) * 100);
+    }
 }

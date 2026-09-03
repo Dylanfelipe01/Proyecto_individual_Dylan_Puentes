@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;600;700&family=Rubik+Glitch&family=Teko:wght@600;700&display=swap" rel="stylesheet">
-    
 </head>
 
 <body>
@@ -28,8 +27,7 @@
             <div class="col-12 col-md-5 col-lg-4">
                 <div class="card app-card">
                     <div class="card-body p-4">
-                        <h2
-                            class="app-card-title mb-3 border-bottom border-secondary pb-2 d-flex align-items-center gap-2">
+                        <h2 class="app-card-title mb-3 border-bottom border-secondary pb-2 d-flex align-items-center gap-2">
                             <i class="bi bi-plus-square-fill text-warning"></i> Nueva misión
                         </h2>
 
@@ -41,13 +39,11 @@
 
                             <div class="mb-3">
                                 <label for="taskDesc" class="form-label app-label fw-bold">Detalles</label>
-                                <textarea class="form-control app-input" id="taskDesc" rows="3"
-                                    placeholder="Añade instrucciones para la misión..."></textarea>
+                                <textarea class="form-control app-input" id="taskDesc" rows="3" placeholder="Añade instrucciones para la misión..."></textarea>
                             </div>
 
                             <div class="mb-3">
-                                <label for="taskPriority" class="form-label app-label fw-bold">Nivel de Riesgo
-                                    (Prioridad)</label>
+                                <label for="taskPriority" class="form-label app-label fw-bold">Nivel de Riesgo (Prioridad)</label>
                                 <select class="form-select app-input" id="taskPriority">
                                     <option value="" selected disabled>Selecciona la prioridad...</option>
                                     <option value="Baja">Baja</option>
@@ -71,15 +67,12 @@
                                 <input type="date" class="form-control app-input" id="taskDueDate">
                             </div>
 
-                            <div id="alertError"
-                                class="alert alert-danger d-none mb-3 fw-bold border-2 border-danger small p-2 text-center"
-                                role="alert">
+                            <div id="alertError" class="alert alert-danger d-none mb-3 fw-bold border-2 border-danger small p-2 text-center" role="alert">
                                 <i class="bi bi-exclamation-octagon-fill me-1"></i>
                                 Diligencia todos los campos antes de continuar.
                             </div>
 
-                            <button type="submit"
-                                class="btn btn-theme-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                            <button type="submit" class="btn btn-theme-primary w-100 d-flex align-items-center justify-content-center gap-2">
                                 <i class="bi bi-star-fill"></i> Iniciar Misión
                             </button>
                         </form>
@@ -92,8 +85,7 @@
                 <div class="card app-card">
                     <div class="card-body p-4">
 
-                        <div
-                            class="d-flex flex-wrap justify-content-between align-items-center mb-3 border-bottom border-secondary pb-3 gap-2">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 border-bottom border-secondary pb-3 gap-2">
                             <div>
                                 <h2 class="app-card-title mb-0">
                                     <i class="bi bi-journal-bookmark-fill me-2 text-warning"></i>Misiones
@@ -101,29 +93,44 @@
                             </div>
                         </div>
 
+                        <!-- Barra de Respeto / Progreso -->
+                        <div class="d-flex align-items-center gap-2 mb-3 px-1">
+                            <span class="fw-bold text-uppercase" style="font-family: 'Teko', sans-serif; font-size: 1.3rem; color: #2ecc71; letter-spacing: 1px;">
+                                RESPETO +
+                            </span>
+                            <div class="progress flex-grow-1 bg-dark border border-secondary" style="height: 12px; border-radius: 0;">
+                                <div id="respectProgressBar" class="progress-bar bg-success progress-bar-striped" role="progressbar" style="width: 0%;"></div>
+                            </div>
+                            <span id="respectPercentage" class="small fw-bold text-warning" style="font-family: 'Rajdhani', sans-serif;">0%</span>
+                        </div>
+
                         <!-- Filtros de estado -->
                         <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-2">
                             <div class="btn-group btn-group-sm" role="group" id="filterGroup">
-                                <button type="button" class="btn btn-theme-outline active"
-                                    data-filter="todas">Todas</button>
-                                <button type="button" class="btn btn-theme-outline"
-                                    data-filter="pendientes">Pendientes</button>
-                                <button type="button" class="btn btn-theme-outline"
-                                    data-filter="pasadas">Completadas</button>
+                                <button type="button" class="btn btn-theme-outline active" data-filter="todas">Todas</button>
+                                <button type="button" class="btn btn-theme-outline" data-filter="pendientes">Pendientes</button>
+                                <button type="button" class="btn btn-theme-outline" data-filter="pasadas">Completadas</button>
                             </div>
                         </div>
 
+                        <!-- Contenedor dinámico de misiones -->
                         <div class="row g-3" id="taskList">
-
+                            <div class="col-12 text-center py-5 empty-state">
+                                <i class="bi bi-geo-alt-fill fs-1 text-warning d-block mb-2"></i>
+                                <h4 class="text-uppercase" style="font-family: 'Teko', sans-serif; letter-spacing: 2px; color: #d0b884;">
+                                    SIN MISIONES PENDIENTES
+                                </h4>
+                                <p class="app-text-muted small">No hay objetivos pendientes. Asigna una nueva misión para ganar respeto.</p>
+                            </div>
                         </div>
 
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
+    <!-- Tarjetas -->
     <template id="taskCardTemplate">
         <div class="col-12 col-lg-6">
             <div class="card h-100 app-task-card">
@@ -144,8 +151,7 @@
                     <div class="pt-2 border-top border-secondary d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center gap-2">
                             <div class="form-check m-0">
-                                <input class="form-check-input chk-complete" type="checkbox"
-                                    title="Marcar como completada">
+                                <input class="form-check-input chk-complete" type="checkbox" title="Marcar como completada">
                             </div>
                             <span class="badge bg-dark border border-secondary text-warning status-badge"></span>
                         </div>

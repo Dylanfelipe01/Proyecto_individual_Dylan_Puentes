@@ -7,6 +7,10 @@ const filterButtons = document.querySelectorAll('#filterGroup button');
 const submitBtn = taskForm.querySelector('button[type="submit"]');
 const cardTemplate = document.querySelector('#taskCardTemplate');
 
+// Variables para la barra de Respeto
+const respectProgressBar = document.querySelector('#respectProgressBar');
+const respectPercentage = document.querySelector('#respectPercentage');
+
 let currentEditId = null;
 
 function validFormFieldInput(data) {
@@ -19,6 +23,21 @@ function validFormFieldInput(data) {
     if (!dueDate || dueDate.trim() === '') return false;
 
     return true;
+}
+
+function updateRespectUI() {
+    if (!respectProgressBar || !respectPercentage) return;
+
+    const total = taskManager.tasks.length;
+    if (total === 0) {
+        respectProgressBar.style.setProperty('width', '0%', 'important');
+        respectPercentage.textContent = '0%';
+        return;
+    }
+
+    const respect = taskManager.getRespectLevel();
+    respectProgressBar.style.setProperty('width', `${respect}%`, 'important');
+    respectPercentage.textContent = `${respect}%`;
 }
 
 taskForm.addEventListener('submit', function (event) {
@@ -47,12 +66,25 @@ taskForm.addEventListener('submit', function (event) {
         }
 
         renderAllTasks();
-        console.log('Misiones actualizadas:', taskManager.tasks);
     }
 });
 
 function renderAllTasks() {
     taskList.innerHTML = '';
+
+    if (taskManager.tasks.length === 0) {
+        taskList.innerHTML = `
+            <div class="col-12 text-center py-5 empty-state">
+                <i class="bi bi-geo-alt-fill fs-1 text-warning d-block mb-2"></i>
+                <h4 class="text-uppercase" style="font-family: 'Teko', sans-serif; letter-spacing: 2px; color: #d0b884;">
+                    SIN MISIONES PENDIENTES
+                </h4>
+                <p class="app-text-muted small">No hay objetivos pendientes. Asigna una nueva misión para ganar respeto.</p>
+            </div>
+        `;
+        updateRespectUI();
+        return;
+    }
 
     taskManager.tasks.forEach(task => {
         const clone = cardTemplate.content.cloneNode(true);
@@ -90,11 +122,9 @@ function renderAllTasks() {
         const chkComplete = colDiv.querySelector('.chk-complete');
         chkComplete.checked = isCompleted;
 
-        
         chkComplete.addEventListener('change', (e) => {
             taskManager.toggleTaskStatus(task.id, e.target.checked);
             renderAllTasks();
-            console.log('Misiones actualizadas:', taskManager.tasks);
         });
 
         colDiv.querySelector('.btn-edit').addEventListener('click', () => {
@@ -107,12 +137,12 @@ function renderAllTasks() {
             }
             taskManager.deleteTask(task.id);
             renderAllTasks();
-            console.log('Misiones actualizadas:', taskManager.tasks);
         });
 
         taskList.prepend(colDiv);
     });
 
+    updateRespectUI();
     refreshCurrentFilter();
 }
 
@@ -149,7 +179,7 @@ filterButtons.forEach(button => {
 });
 
 function applyFilter(filterType) {
-    const taskCards = document.querySelectorAll('#taskList > div');
+    const taskCards = document.querySelectorAll('#taskList > div:not(.empty-state)');
 
     taskCards.forEach(card => {
         const taskId = card.dataset.id;
@@ -181,3 +211,5 @@ function refreshCurrentFilter() {
         applyFilter(activeFilterBtn.getAttribute('data-filter'));
     }
 }
+
+renderAllTasks();

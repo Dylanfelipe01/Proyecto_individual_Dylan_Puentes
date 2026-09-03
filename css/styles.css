@@ -2,25 +2,18 @@ body {
     background: url('../img/fondo.png') no-repeat center center fixed !important;
     background-size: cover !important;
     color: #f1e9d2;
-    font-family: 'Bebas Neue', sans-serif; /* Opción urbana limpia para textos */
+    font-family: 'Rajdhani', sans-serif !important;
+    font-weight: 600;
 }
 
-/* HEADER */
 .app-header {
     background: linear-gradient(135deg, #2b261f 0%, #171512 100%);
     border: 3px solid #d0b884;
     box-shadow: 6px 6px 0px #000000;
 }
 
-.app-logo {
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-    box-shadow: 3px 3px 0px #000000;
-}
-
 .app-title {
-    font-family: 'Teko', sans-serif;
+    font-family: 'Rubik Glitch', system-ui;
     font-size: 2.5rem;
     letter-spacing: 2px;
     color: #d0b884;
@@ -32,9 +25,11 @@ body {
 .app-subtitle {
     color: #a09275;
     letter-spacing: 2px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
 }
 
-/* CONTENEDORES Y TARJETAS */
+
 .app-card {
     background-color: #26221c !important;
     border: 3px solid #000000 !important;
@@ -44,18 +39,21 @@ body {
 
 .app-card-title {
     font-family: 'Teko', sans-serif;
-    font-size: 1.75rem;
-    letter-spacing: 1px;
+    font-size: 1.85rem;
+    letter-spacing: 1.5px;
     color: #d0b884;
     text-transform: uppercase;
 }
 
-/* FORMULARIOS E INPUTS */
+
 .app-input {
     background-color: #171512 !important;
     border: 2px solid #574b39 !important;
     color: #f1e9d2 !important;
-    font-size: 0.95rem;
+    font-family: 'Rajdhani', sans-serif !important;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.8px;
 }
 
 .app-input:focus {
@@ -65,18 +63,20 @@ body {
 
 .app-label {
     color: #c0b192;
+    font-family: 'Rajdhani', sans-serif !important;
+    font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
 }
 
-/* BOTONES */
+
 .btn-theme-primary {
     background-color: #d0b884;
     color: #000000;
     font-family: 'Teko', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 1px;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
     border: 2px solid #000;
     box-shadow: 3px 3px 0px #000;
     text-transform: uppercase;
@@ -95,20 +95,22 @@ body {
     color: #d0b884;
     border: 2px solid #574b39;
     font-family: 'Teko', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
     text-transform: uppercase;
 }
 
-.btn-theme-outline.active, .btn-theme-outline:hover {
+.btn-theme-outline.active, 
+.btn-theme-outline:hover {
     background-color: #d0b884;
     color: #000000;
     border-color: #000;
 }
 
-/* TARJETAS DE TAREAS */
+
 .app-task-card {
-    background-color: #1f1b16;
-    border: 2px solid #000;
+    background-color: #1a1714 !important;
+    border: 2px solid #000 !important;
     box-shadow: 4px 4px 0px #000;
     transition: transform 0.15s ease;
 }
@@ -118,19 +120,48 @@ body {
     box-shadow: 6px 6px 0px #000;
 }
 
-/* TITULO Y DESCRIPCIÓN DE LA TAREA (EN BLANCO VISIBLE) */
+
+#taskList {
+    row-gap: 1.25rem !important;
+    column-gap: 1rem !important;
+}
+
 .task-title {
     color: #ffffff !important;
-    font-size: 1.1rem;
-    letter-spacing: 0.5px;
+    font-family: 'Rajdhani', sans-serif !important;
+    font-size: 1.35rem !important;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .app-task-desc {
-    color: #ffffff !important;
-    opacity: 0.95;
+    color: #e0d8c3 !important;
+    font-family: 'Rajdhani', sans-serif !important;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
 }
 
-/* TEXTO PARA TAREAS COMPLETADAS */
+
+.task-date-warning,
+.task-date-danger,
+.task-date-success {
+    font-family: 'Rajdhani', sans-serif !important;
+    font-weight: 700;
+    font-size: 1rem !important;
+    letter-spacing: 1.5px;
+    color: #ffd166;
+}
+
+.task-date-warning i,
+.task-date-danger i,
+.task-date-success i {
+    font-size: 1.05rem;
+    margin-right: 4px;
+}
+
+
 .completed .task-title,
 .completed .app-task-desc,
 .app-task-completed .task-title,
@@ -139,35 +170,31 @@ body {
     text-decoration: line-through;
 }
 
-/* BORDES DE PRIORIDAD */
+
 .border-theme-danger { border-top: 5px solid #ff4d4d !important; }
 .border-theme-warning { border-top: 5px solid #ffaa00 !important; }
 .border-theme-success { border-top: 5px solid #2ecc71 !important; }
 
-/* BADGES DE PRIORIDAD */
+
 .badge-theme-danger { background-color: #3b1111; color: #ff6b6b; border: 1px solid #ff4d4d; }
 .badge-theme-warning { background-color: #3b2b11; color: #ffd166; border: 1px solid #ffaa00; }
 .badge-theme-success { background-color: #113b1f; color: #6bcc8b; border: 1px solid #2ecc71; }
 .badge-theme-info { background-color: #29241c; color: #d0b884; border: 1px solid #574b39; }
 
-/* FECHAS */
-.task-date-danger { color: #ff6b6b; }
-.task-date-warning { color: #ffd166; }
-.task-date-success { color: #6bcc8b; }
 
-/* OTROS ELEMENTOS */
 .form-check-input:checked {
     background-color: #d0b884;
     border-color: #000;
 }
 
 .extra-small {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 
 .app-text-muted {
     color: #a09275;
 }
+
 .btn-theme-edit {
     color: #a09275;
     transition: color 0.15s ease;
@@ -175,8 +202,4 @@ body {
 
 .btn-theme-edit:hover {
     color: #d0b884;
-}
-
-.app-title {
-    font-family: 'Rubik Glitch', system-ui;
 }
