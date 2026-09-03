@@ -21,7 +21,6 @@ Características y Funcionalidades
 Tecnologías Utilizadas
 
 * HTML5:** Marcado semántico y estructura base mediante templates.
-* CSS3:** Estilos personalizados, gradientes, sombras duras e integración de fuentes de Google Fonts (*Rubik Glitch*, *Teko*, *Rajdhani*).
 * JavaScript (Vanilla):** Programación orientada a objetos (`TaskManager`), manipulación del DOM y manejo de eventos reactivos.
 * Bootstrap 5 & Bootstrap Icons:** Rejilla responsiva, utilidades y paquetización de iconos.
 
