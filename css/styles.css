@@ -1,7 +1,8 @@
 body {
-    background-color: #1a1816 !important; 
+    background: url('../img/fondo.png') no-repeat center center fixed !important;
+    background-size: cover !important;
     color: #f1e9d2;
-    font-family: 'Changa', sans-serif;
+    font-family: 'Bebas Neue', sans-serif; /* Opción urbana limpia para textos */
 }
 
 /* HEADER */
@@ -167,7 +168,6 @@ body {
 .app-text-muted {
     color: #a09275;
 }
-
 .btn-theme-edit {
     color: #a09275;
     transition: color 0.15s ease;
@@ -175,4 +175,8 @@ body {
 
 .btn-theme-edit:hover {
     color: #d0b884;
+}
+
+.app-title {
+    font-family: 'Rubik Glitch', system-ui;
 }
